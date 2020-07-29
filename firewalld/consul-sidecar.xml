@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<service>
+  <short>Consul Sidecar Service Registrations</short>
+  <description></description>
+  <port protocol="tcp" port="21000-21255" />
+  <port protocol="udp" port="21000-21255" />
+</service>

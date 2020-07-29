@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<service>
+  <short>Consul LAN Serf</short>
+  <description></description>
+  <port protocol="tcp" port="8301" />
+  <port protocol="udp" port="8301" />
+</service>

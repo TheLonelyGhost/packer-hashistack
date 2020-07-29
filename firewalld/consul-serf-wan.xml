@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<service>
+  <short>Consul WAN Serf</short>
+  <description></description>
+  <port protocol="tcp" port="8302" />
+  <port protocol="udp" port="8302" />
+</service>

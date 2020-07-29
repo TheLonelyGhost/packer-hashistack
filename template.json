@@ -1,0 +1,71 @@
+{
+  "variables": {
+    "consul_version": "1.8.0",
+    "nomad_version": "0.12.1",
+    "vault_version": "1.5.0",
+    "linode_api_key": "{{ env `LINODE_API_KEY` }}",
+    "ssh_port": "{{ env `SSH_PORT` }}",
+    "entry_username": "{{ env `SSH_USER` }}",
+    "entry_user_pubkey": "{{ env `PUBKEY` }}"
+  },
+  "sensitive-variables": ["entry_username", "ssh_port", "linode_api_key"],
+  "builders": [
+    {
+      "type": "linode",
+      "linode_token": "{{ user `linode_api_key` }}",
+      "image": "linode/centos8",
+      "region": "us-east",
+      "instance_type": "g6-nanode-1",
+      "instance_label": "temp-packer-linode-{{ timestamp }}",
+      "instance_tags": ["packer", "delete-me-if-older-than-4-hours"],
+
+      "image_label": "hashistack",
+      "image_description": "A CentOS 8.x based image ready to run Consul (v{{ user `consul_version`}}), Nomad (v{{ user `nomad_version` }}), and Vault (v{{ user `vault_version` }})",
+
+      "ssh_username": "root"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "{{ template_dir }}/firewalld",
+      "destination": "/tmp"
+    },
+    {
+      "type": "file",
+      "source": "systemd/",
+      "destination": "/etc/systemd/system"
+    },
+    {
+      "type": "shell",
+      "script": "{{ template_dir }}/scripts/base.sh",
+      "environment_vars": [
+        "ENTRY_USER={{ user `entry_username }}",
+        "ENTRY_PUBKEY={{ user `entry_user_pubkey` }}",
+        "SSH_PORT={{ user `ssh_port` }}"
+      ]
+    },
+    {
+      "type": "shell",
+      "script": "{{ template_dir }}/scripts/install-consul.sh",
+      "environment_vars": [
+        "CONSUL_VERSION={{ user `consul_version` }}"
+      ]
+    },
+    {
+      "type": "file",
+      "source": "{{ template_dir }}/conf/consul-dnsmasq.ini",
+      "destination": "/etc/dnsmasq.d/10-consul"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "systemctl daemon-reload",
+        "dnf clean all",
+        "systemctl restart sshd",
+        "if [ '{{ user `ssh_port` }}' != '22' ]; then firewall-cmd --permanent --service='ssh' --remove-port='22/tcp'; fi",
+        "firewall-cmd --reload"
+      ]
+    }
+  ]
+}
