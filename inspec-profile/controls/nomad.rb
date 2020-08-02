@@ -16,7 +16,7 @@ control 'hashistack-1.1' do
   end
 
   describe 'Nomad data directory' do
-    subject { directory('/opt/nomad.d') }
+    subject { directory('/opt/nomad') }
     it { should exist }
     its('owner') { should eq 'nomad' }
     its('group') { should eq 'nomad' }
@@ -37,13 +37,6 @@ control 'hashistack-1.1' do
   describe command('systemd-analyze verify /etc/systemd/system/nomad.service') do
     its('stderr') { should eq '' }
     its('exit_status') { should eq 0 }
-  end
-
-  describe firewalld do
-    it { should have_service_enabled_in_zone('http', 'public') }
-    it { should have_service_enabled_in_zone('https', 'public') }
-    it { should have_service_enabled_in_zone('nomad', 'internal') }
-    it { should have_service_enabled_in_zone('nomad', 'trusted') }
   end
 end
 
@@ -73,5 +66,11 @@ control 'hashistack-1.1a' do
 
   describe directory('/opt/cni/bin') do
     it { should exist }
+  end
+
+  # An example plugin: flannel
+  describe file('/opt/cni/bin/flannel') do
+    it { should exist }
+    it { should be_executable }
   end
 end

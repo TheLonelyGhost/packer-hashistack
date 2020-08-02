@@ -36,22 +36,9 @@ control 'hashistack-1.0' do
     it { should exist }
   end
 
-  describe firewalld do
-    it { should have_service_enabled_in_zone('consul-dns', 'internal') }
-    it { should have_service_enabled_in_zone('consul-http', 'internal') }
-    it { should have_service_enabled_in_zone('consul-serf-lan', 'trusted') }
-    it { should have_service_enabled_in_zone('consul-serf-wan', 'trusted') }
-    it { should have_service_enabled_in_zone('consul-serf-wan', 'public') }
-    it { should have_service_enabled_in_zone('consul-sidecar', 'public') }
-    it { should have_service_enabled_in_zone('consul-expose', 'public') }
-    it { should have_service_enabled_in_zone('consul-server', 'public') }
-    it { should have_service_enabled_in_zone('consul-grpc', 'public') }
-    it { should have_service_enabled_in_zone('dns', 'internal') }
-  end
-
   describe systemd_service('dnsmasq') do
     it { should be_installed }
-    it { should be_running }
+    it { should be_enabled }
   end
 
   describe file('/etc/dnsmasq.d/10-consul') do
