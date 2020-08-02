@@ -1,9 +1,9 @@
 # copyright: 2020, David Alexander
 
-control 'hashistack-1.0' do
+control 'hashistack-1.0a' do
   impact 0.7
-  title 'Install HashiCorp Consul'
-  desc ''
+  title 'Consul'
+  desc 'Install Consul and include barebones configuration'
 
   describe file('/usr/local/bin/consul') do
     it { should exist }
@@ -30,10 +30,6 @@ control 'hashistack-1.0' do
   describe systemd_service('consul') do
     it { should be_installed }
     it { should be_enabled }
-  end
-
-  describe command('envoy') do
-    it { should exist }
   end
 
   describe systemd_service('dnsmasq') do
