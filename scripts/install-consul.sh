@@ -54,6 +54,8 @@ fi
 systemctl enable dnsmasq
 
 if command -v firewall-cmd 1>/dev/null 2>&1; then
+  firewall-cmd --permanent --zone='internal' --add-service='dns'
+
   # We're registering these as Firewalld services so we can choose to come back
   # later, when configuring Consul, to modify the ports associated with the each
   # service. Until then we can apply sane rules for who is allowed to communicate
@@ -65,7 +67,7 @@ if command -v firewall-cmd 1>/dev/null 2>&1; then
     fi
   done
 
-  printf '>>>  Allowing consul services in their proper zones\n'
+  printf '>>>  Permitting Consul services to communicate in their proper zones\n'
   firewall-cmd --permanent --zone='public' --add-service='consul-expose'
   firewall-cmd --permanent --zone='public' --add-service='consul-grpc'
   firewall-cmd --permanent --zone='public' --add-service='consul-server'
