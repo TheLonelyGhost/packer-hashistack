@@ -69,8 +69,8 @@
     {
       "type": "shell",
       "inline": [
-        "systemctl daemon-reload",
         "dnf clean all",
+        "systemctl daemon-reload",
         "systemctl restart sshd",
         "if [ '{{ user `ssh_port` }}' != '22' ]; then firewall-cmd --permanent --service='ssh' --remove-port='22/tcp'; fi",
         "firewall-cmd --reload"
