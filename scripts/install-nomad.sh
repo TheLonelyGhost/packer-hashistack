@@ -109,11 +109,9 @@ printf '>>>  Setting up firewall rules Nomad services\n'
 firewall-cmd --permanent --zone='public' --add-service='http'
 firewall-cmd --permanent --zone='public' --add-service='https'
 
-if [ -e /tmp/firewalld/nomad.xml ]; then
-  printf ">>>  Setting up firewall rules for Nomad's inter-node communication\n"
-  firewall-cmd --permanent --zone='trusted' --add-service='nomad'
-  firewall-cmd --permanent --zone='internal' --add-service='nomad'
-fi
+printf ">>>  Setting up firewall rules for Nomad's inter-node communication\n"
+firewall-cmd --permanent --zone='trusted' --add-service='nomad'
+firewall-cmd --permanent --zone='internal' --add-service='nomad'
 
 printf '>>>  Installing CNI plugins (v%s)\n' "${CNI_PLUGINS_VERSION}"
 mkdir -p /opt/cni/bin
