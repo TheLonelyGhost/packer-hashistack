@@ -59,6 +59,13 @@
     },
     {
       "type": "shell",
+      "script": "{{ template_dir }}/scripts/install-nomad.sh",
+      "environment_vars": [
+        "NOMAD_VERSION={{ user `nomad_version` }}"
+      ]
+    },
+    {
+      "type": "shell",
       "inline": [
         "systemctl daemon-reload",
         "dnf clean all",
