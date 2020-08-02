@@ -42,7 +42,7 @@
       "script": "{{ template_dir }}/scripts/base.sh",
       "environment_vars": [
         "ENTRY_USER={{ user `entry_username` }}",
-        "ENTRY_PUBKEY={{ user `entry_user_pubkey` }}",
+        "ENTRY_USER_PUBKEY={{ user `entry_user_pubkey` }}",
         "SSH_PORT={{ user `ssh_port` }}"
       ]
     },
