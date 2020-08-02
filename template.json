@@ -67,16 +67,6 @@
       ]
     },
     {
-      "type": "inspec",
-      "profile": "./inspec-profile",
-      "inspec_env_vars": [
-        "CHEF_LICENSE=accept",
-        "ENTRY_USER={{ user `entry_username` }}",
-        "ENTRY_USER_PUBKEY={{ user `entry_user_pubkey` }}",
-        "SSH_PORT={{ user `ssh_port` }}"
-      ]
-    },
-    {
       "type": "shell",
       "inline": [
         "dnf clean all",
@@ -84,6 +74,16 @@
         "systemctl restart sshd",
         "if [ '{{ user `ssh_port` }}' != '22' ]; then firewall-cmd --permanent --service='ssh' --remove-port='22/tcp'; fi",
         "firewall-cmd --reload"
+      ]
+    },
+    {
+      "type": "inspec",
+      "profile": "./inspec-profile",
+      "inspec_env_vars": [
+        "CHEF_LICENSE=accept",
+        "ENTRY_USER={{ user `entry_username` }}",
+        "ENTRY_USER_PUBKEY={{ user `entry_user_pubkey` }}",
+        "SSH_PORT={{ user `ssh_port` }}"
       ]
     }
   ]
