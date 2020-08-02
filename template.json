@@ -3,6 +3,7 @@
     "consul_version": "1.8.0",
     "nomad_version": "0.12.1",
     "vault_version": "1.5.0",
+    "cni_plugins_version": "0.8.6",
     "linode_api_key": "{{ env `LINODE_API_KEY` }}",
     "ssh_port": "{{ env `SSH_PORT` }}",
     "entry_username": "{{ env `SSH_USER` }}",
@@ -61,7 +62,8 @@
       "type": "shell",
       "script": "{{ template_dir }}/scripts/install-nomad.sh",
       "environment_vars": [
-        "NOMAD_VERSION={{ user `nomad_version` }}"
+        "NOMAD_VERSION={{ user `nomad_version` }}",
+        "CNI_PLUGINS_VERSION={{ user `cni_plugins_version` }}"
       ]
     },
     {
