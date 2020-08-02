@@ -2,7 +2,11 @@
 set -euo pipefail
 
 dnf update -y
-dnf install -y unzip curl policycoreutils-python-utils perl tar firewalld
+dnf install -y unzip curl policycoreutils-python-utils perl tar firewalld epel-release
+dnf install -y fail2ban
+
+systemctl daemon-reload
+systemctl enable fail2ban
 
 if ! firewall-cmd --zone='public' --list-services | grep -e ssh 1>/dev/null; then
   printf '>>>  Allow SSH communications over WAN\n'
