@@ -36,12 +36,12 @@ control 'hashistack-1.3' do
     it { should have_service_enabled_in_zone('ssh', 'public') }
 
     # Consul
-    it { should have_service_enabled_in_zone('consul-dns', 'internal') }
-    it { should have_service_enabled_in_zone('consul-http', 'internal') }
+    it { should have_service_enabled_in_zone('consul-dns', 'trusted') }
+    it { should have_service_enabled_in_zone('consul-http', 'trusted') }
     it { should have_service_enabled_in_zone('consul-serf-lan', 'trusted') }
     it { should have_service_enabled_in_zone('consul-serf-wan', 'trusted') }
     it { should have_service_enabled_in_zone('consul-serf-wan', 'public') }
-    it { should have_service_enabled_in_zone('consul-sidecar', 'public') }
+    it { should have_service_enabled_in_zone('consul-sidecar', 'trusted') }
     it { should have_service_enabled_in_zone('consul-expose', 'public') }
     it { should have_service_enabled_in_zone('consul-server', 'public') }
     it { should have_service_enabled_in_zone('consul-grpc', 'public') }
@@ -55,7 +55,9 @@ control 'hashistack-1.3' do
   end
 
   describe firewalld.where { zone == 'trusted' } do
-    # Include Linode private IP space
-    its('sources') { should include '192.168.128.0/17' }
+    it 'should include the Linode private IP range' do
+      addresses = subject.sources.flatten
+      expect(addresses).to include '192.168.128.0/17'
+    end
   end
 end
