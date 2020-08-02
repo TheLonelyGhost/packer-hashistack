@@ -68,12 +68,9 @@
     },
     {
       "type": "shell",
-      "inline": [
-        "dnf clean all",
-        "systemctl daemon-reload",
-        "systemctl restart sshd",
-        "if [ '{{ user `ssh_port` }}' != '22' ]; then firewall-cmd --permanent --service='ssh' --remove-port='22/tcp'; fi",
-        "firewall-cmd --reload"
+      "script": "{{ template_dir }}/scripts/cleanup.sh",
+      "environment_vars": [
+        "SSH_PORT={{ user `ssh_port` }}"
       ]
     },
     {
