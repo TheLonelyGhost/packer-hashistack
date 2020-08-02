@@ -60,7 +60,7 @@ if command -v firewall-cmd 1>/dev/null 2>&1; then
   # to what service by assigning these to zones.
   for service in 'consul-dns' 'consul-grpc' 'consul-http' 'consul-https' 'consul-serf-lan' 'consul-serf-wan' 'consul-server' 'consul-sidecar' 'consul-expose'; do
     if [ -e "/tmp/firewalld/${service}.xml" ]; then
-      printf '>>>  Installing firewall definition for %s\n' "$service"
+      printf '>>>  Installing firewall definition for "%s" service\n' "$service"
       firewall-cmd --permanent --new-service-from-file="/tmp/firewalld/${service}.xml" --name="${service}"
     fi
   done

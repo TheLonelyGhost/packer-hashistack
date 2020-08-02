@@ -100,7 +100,7 @@ fi
 
 for service in 'nomad'; do
   if [ -e "/tmp/firewalld/${service}.xml" ]; then
-    printf '>>>  Installing firewall definition for %s\n' "$service"
+    printf '>>>  Installing firewall definition for "%s" service\n' "$service"
     firewall-cmd --permanent --new-service-from-file="/tmp/firewalld/${service}.xml" --name="${service}"
   fi
 done
