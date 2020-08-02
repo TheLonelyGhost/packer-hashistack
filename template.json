@@ -68,6 +68,13 @@
     },
     {
       "type": "shell",
+      "script": "{{ template_dir }}/scripts/install-vault.sh",
+      "environment_vars": [
+        "VAULT_VERSION={{ user `vault_version` }}"
+      ]
+    },
+    {
+      "type": "shell",
       "script": "{{ template_dir }}/scripts/cleanup.sh"
     },
     {
