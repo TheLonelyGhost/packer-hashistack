@@ -126,3 +126,6 @@ if [ -e ./cni-plugins_SHA256SUMS ]; then
   rm ./cni-plugins_SHA256SUMS
 fi
 tar xzf ./cni-plugins.tgz -C /opt/cni/bin/
+
+systemctl daemon-reload
+systemctl enable nomad
