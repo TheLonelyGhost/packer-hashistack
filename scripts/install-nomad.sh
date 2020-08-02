@@ -98,7 +98,6 @@ fi
 } > /etc/sysctl.d/70-nomad.conf
 "$sysctl" --load /etc/sysctl.d/70-nomad.conf
 
-printf '>>>  Setting up firewall rules Nomad services\n'
 for service in 'nomad'; do
   if [ -e "/tmp/firewalld/${service}.xml" ]; then
     printf '>>>  Installing firewall definition for %s\n' "$service"
@@ -106,6 +105,7 @@ for service in 'nomad'; do
   fi
 done
 
+printf '>>>  Setting up firewall rules Nomad services\n'
 firewall-cmd --permanent --zone='public' --add-service='http'
 firewall-cmd --permanent --zone='public' --add-service='https'
 

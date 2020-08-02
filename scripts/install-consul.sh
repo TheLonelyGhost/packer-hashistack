@@ -65,6 +65,7 @@ if command -v firewall-cmd 1>/dev/null 2>&1; then
     fi
   done
 
+  printf '>>>  Allowing consul services in their proper zones\n'
   firewall-cmd --permanent --zone='public' --add-service='consul-expose'
   firewall-cmd --permanent --zone='public' --add-service='consul-grpc'
   firewall-cmd --permanent --zone='public' --add-service='consul-server'
