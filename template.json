@@ -68,10 +68,7 @@
     },
     {
       "type": "shell",
-      "script": "{{ template_dir }}/scripts/cleanup.sh",
-      "environment_vars": [
-        "SSH_PORT={{ user `ssh_port` }}"
-      ]
+      "script": "{{ template_dir }}/scripts/cleanup.sh"
     },
     {
       "type": "inspec",
