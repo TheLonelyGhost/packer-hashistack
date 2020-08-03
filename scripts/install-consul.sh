@@ -83,7 +83,7 @@ fi
 systemctl enable dnsmasq
 
 if command -v firewall-cmd 1>/dev/null 2>&1; then
-  firewall-cmd --permanent --zone='internal' --add-service='dns'
+  firewall-cmd --permanent --zone='trusted' --add-service='dns'
 
   # We're registering these as Firewalld services so we can choose to come back
   # later, when configuring Consul, to modify the ports associated with the each
