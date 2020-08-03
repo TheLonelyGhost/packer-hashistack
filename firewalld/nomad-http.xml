@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<service>
+  <short>Nomad HTTP</short>
+  <description>HTTP to provide UI and API access to agents</description>
+  <port protocol="tcp" port="4646" />
+</service>

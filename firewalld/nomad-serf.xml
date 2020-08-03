@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<service>
+  <short>Nomad Serf</short>
+  <description>Gossip protocol to manage server membership using Serf</description>
+  <port protocol="tcp" port="4648" />
+  <port protocol="udp" port="4648" />
+</service>

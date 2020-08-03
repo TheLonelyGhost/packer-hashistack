@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<service>
+  <short>Nomad RPC</short>
+  <description>RPC protocol used by agents to talk to Nomad Servers</description>
+  <port protocol="tcp" port="4647" />
+</service>

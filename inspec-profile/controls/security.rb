@@ -47,13 +47,15 @@ control 'hashistack-1.4b' do
     it { should have_service_enabled_in_zone('consul-expose', 'public') }
     it { should have_service_enabled_in_zone('consul-server', 'public') }
     it { should have_service_enabled_in_zone('consul-grpc', 'public') }
-    it { should have_service_enabled_in_zone('dns', 'internal') }
+    it { should have_service_enabled_in_zone('dns', 'trusted') }
 
     # Nomad
     it { should have_service_enabled_in_zone('http', 'public') }
     it { should have_service_enabled_in_zone('https', 'public') }
-    it { should have_service_enabled_in_zone('nomad', 'internal') }
-    it { should have_service_enabled_in_zone('nomad', 'trusted') }
+    it { should have_service_enabled_in_zone('nomad-http', 'public') }
+    it { should have_service_enabled_in_zone('nomad-serf', 'internal') }
+    it { should have_service_enabled_in_zone('nomad-serf', 'trusted') }
+    it { should have_service_enabled_in_zone('nomad-grpc', 'trusted') }
   end
 
   describe firewalld.where { zone == 'internal' } do
