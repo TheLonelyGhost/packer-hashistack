@@ -68,6 +68,15 @@ control 'hashistack-1.4b' do
       expect(subject.sources.flatten).to include 'ipset:consul'
     end
   end
+
+  describe.one do
+    describe file('/usr/etc/firewalld/ipsets/consul.xml') do
+      it { should exist }
+    end
+    describe file('/usr/lib/firewalld/ipsets/consul.xml') do
+      it { should exist }
+    end
+  end
 end
 
 control 'hashistack-1.4c' do
