@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<service>
+  <short>Vault</short>
+  <description>Vault Server traffic</description>
+  <!-- Vault HTTP API and UI -->
+  <port protocol="tcp" port="8200" />
+  <!-- Vault cluster communication with Raft -->
+  <port protocol="tcp" port="8201" />
+</service>

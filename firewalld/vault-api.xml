@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<service>
-  <short>Vault API</short>
-  <description>HTTP endpoint for Vault service to securely serve data to clients</description>
-  <port protocol="tcp" port="8200" />
-</service>

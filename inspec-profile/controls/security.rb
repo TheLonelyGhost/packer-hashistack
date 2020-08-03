@@ -56,6 +56,9 @@ control 'hashistack-1.4b' do
     it { should have_service_enabled_in_zone('nomad-serf', 'internal') }
     it { should have_service_enabled_in_zone('nomad-serf', 'trusted') }
     it { should have_service_enabled_in_zone('nomad-grpc', 'trusted') }
+
+    # Vault (Only for Vault Server nodes)
+    #it { should have_service_enabled_in_zone('vault', 'trusted') }
   end
 
   describe firewalld.where { zone == 'internal' } do

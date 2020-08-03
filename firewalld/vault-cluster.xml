@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<service>
-  <short>Vault Cluster</short>
-  <description>Raft consensus port for Vault servers to communicate with each other</description>
-  <port protocol="tcp" port="8201" />
-</service>

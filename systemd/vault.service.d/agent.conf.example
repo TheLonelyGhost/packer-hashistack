@@ -1,0 +1,5 @@
+
+[Service]
+ExecStart=/usr/local/bin/vault agent -config=/etc/vault.d/
+
+# vim: ft=systemd

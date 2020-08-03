@@ -36,13 +36,18 @@ chown -R vault:vault /etc/vault.d
 chmod 700 /etc/vault.d
 
 if command -v firewall-cmd 1>/dev/null 2>&1; then
-  for service in 'vault-api' 'vault-cluster'; do
+  for service in 'vault'; do
     if [ -e "/tmp/firewalld/${service}.xml" ]; then
       printf '>>>  Installing firewall definition for "%s" service\n' "$service"
       firewall-cmd --permanent --new-service-from-file="/tmp/firewalld/${service}.xml" --name="${service}"
     fi
   done
 
-  firewall-cmd --permanent --zone='trusted' --add-service='vault-api'
-  firewall-cmd --permanent --zone='trusted' --add-service='vault-cluster'
+  # This should be enabled for Vault Server nodes only, or else we risk
+  # exposing the built-in VAULT_TOKEN that the agent sinks to the
+  # filesystem.
+
+  #firewall-cmd --permanent --zone='trusted' --add-service='vault'
 fi
+
+systemctl enable vault
