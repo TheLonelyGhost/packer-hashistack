@@ -46,5 +46,5 @@ if [ -n "${ENTRY_USER:-}" -a -n "${ENTRY_USER_PUBKEY:-}" ]; then
   chmod 600 /home/"${ENTRY_USER}"/.ssh/authorized_keys
 fi
 
-# LINODE: Add private IPv4 range to trusted network zone
-firewall-cmd --permanent --zone='trusted' --add-source='192.168.128.0/17'
+# LINODE: Add private IPv4 range to internal network zone
+firewall-cmd --permanent --zone='internal' --add-source='192.168.128.0/17'

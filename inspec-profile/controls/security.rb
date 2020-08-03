@@ -56,7 +56,7 @@ control 'hashistack-1.4b' do
     it { should have_service_enabled_in_zone('nomad', 'trusted') }
   end
 
-  describe firewalld.where { zone == 'trusted' } do
+  describe firewalld.where { zone == 'internal' } do
     it 'should include the Linode private IP range' do
       addresses = subject.sources.flatten
       expect(addresses).to include '192.168.128.0/17'
