@@ -10,7 +10,7 @@ curl -SsLo ./consul.zip https://releases.hashicorp.com/consul/${CONSUL_VERSION}/
 
 if [ -e ./consul_SHA256SUMS ]; then
   printf '>>>  Verifying Consul download...\n'
-  awk '/_linux_amd64/ { print $1 " consul.zip" }' ./consul_SHA256SUMS | sha256sum --check -
+  awk '/_linux_amd64.zip/ { print $1 " consul.zip" }' ./consul_SHA256SUMS | sha256sum --check -
   rm ./consul_SHA256SUMS
 fi
 
@@ -27,14 +27,13 @@ mv ./consul /usr/local/bin/consul
 /usr/local/bin/consul -autocomplete-install
 complete -C /usr/local/bin/consul consul
 
-
 printf '>>>  Downloading Consul Template v%s...\n' "$CONSUL_TEMPLATE_VERSION"
 curl -SsLo ./consul-template_SHA256SUMS https://releases.hashicorp.com/consul-template/${CONSUL_TEMPLATE_VERSION}/consul-template_${CONSUL_TEMPLATE_VERSION}_SHA256SUMS
 curl -SsLo ./consul-template.zip https://releases.hashicorp.com/consul-template/${CONSUL_TEMPLATE_VERSION}/consul-template_${CONSUL_TEMPLATE_VERSION}_linux_amd64.zip
 
 if [ -e ./consul-template_SHA256SUMS ]; then
   printf '>>>  Verifying Consul Template download...\n'
-  awk '/_linux_amd64/ { print $1 " consul-template.zip" }' ./consul-template_SHA256SUMS | sha256sum --check -
+  awk '/_linux_amd64.zip/ { print $1 " consul-template.zip" }' ./consul-template_SHA256SUMS | sha256sum --check -
   rm ./consul-template_SHA256SUMS
 fi
 
