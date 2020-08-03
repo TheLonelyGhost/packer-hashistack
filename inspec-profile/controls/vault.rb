@@ -14,7 +14,7 @@ control 'hashistack-1.3a' do
       expect(command('vault')).to exist
     end
     it 'should have ipc_lock capability' do
-      expect(command('getcap /usr/local/bin/vault')).to include 'cap_ipc_lock'
+      expect(command('getcap /usr/local/bin/vault').stdout).to include 'cap_ipc_lock'
     end
   end
 

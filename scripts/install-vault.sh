@@ -33,7 +33,7 @@ useradd --system --home /etc/vault.d --shell /bin/false vault
 printf '>>>  Creating Vault data directory\n'
 mkdir -p /etc/vault.d
 chown -R vault:vault /etc/vault.d
-
+chmod 700 /etc/vault.d
 
 if command -v firewall-cmd 1>/dev/null 2>&1; then
   for service in 'vault-api' 'vault-cluster'; do
