@@ -30,11 +30,8 @@ control 'hashistack-1.3a' do
     its('mode') { should eq 0o700 }
   end
 
-  describe systemd_service('vault-agent') do
+  describe systemd_service('vault') do
     it { should be_installed }
-  end
-
-  describe systemd_service('vault-server') do
-    it { should be_installed }
+    it { should be_enabled }
   end
 end

@@ -75,6 +75,9 @@ control 'hashistack-1.4b' do
   end
 
   describe.one do
+    describe file('/etc/firewalld/ipsets/consul.xml') do
+      it { should exist }
+    end
     describe file('/usr/etc/firewalld/ipsets/consul.xml') do
       it { should exist }
     end
