@@ -56,6 +56,11 @@ chmod 600 -R /etc/consul.d
 chmod 700 /etc/consul.d
 chown -R consul:consul /etc/consul.d
 
+printf '>>>  Creating Consul data directory\n'
+mkdir -p /opt/consul
+chmod 700 /opt/consul
+chown -R consul:consul /opt/consul
+
 printf '>>>  Creating Consul Template configuration directory\n'
 mkdir -p /etc/consul-template/conf.d
 mkdir -p /etc/consul-template/templates.d
