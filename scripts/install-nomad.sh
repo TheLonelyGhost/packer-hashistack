@@ -98,24 +98,26 @@ fi
 } > /etc/sysctl.d/70-nomad.conf
 "$sysctl" --load /etc/sysctl.d/70-nomad.conf
 
-for service in 'nomad-http' 'nomad-serf' 'nomad-grpc'; do
-  if [ -e "/tmp/firewalld/${service}.xml" ]; then
-    printf '>>>  Installing firewall definition for "%s" service\n' "$service"
-    firewall-cmd --permanent --new-service-from-file="/tmp/firewalld/${service}.xml" --name="${service}"
-  fi
-done
+if command -v firewall-cmd 1>/dev/null 2>&1; then
+  for service in 'nomad-http' 'nomad-serf' 'nomad-grpc'; do
+    if [ -e "/tmp/firewalld/${service}.xml" ]; then
+      printf '>>>  Installing firewall definition for "%s" service\n' "$service"
+      firewall-cmd --permanent --new-service-from-file="/tmp/firewalld/${service}.xml" --name="${service}"
+    fi
+  done
 
-printf '>>>  Setting up firewall rules Nomad services\n'
-firewall-cmd --permanent --zone='public' --add-service='http'
-firewall-cmd --permanent --zone='public' --add-service='https'
+  printf '>>>  Setting up firewall rules Nomad services\n'
+  firewall-cmd --permanent --zone='public' --add-service='http'
+  firewall-cmd --permanent --zone='public' --add-service='https'
 
-printf '>>>  Setting up firewall rules for Nomad HTTP API and UI\n'
-firewall-cmd --permanent --zone='public' --add-service='nomad-http'
+  printf '>>>  Setting up firewall rules for Nomad HTTP API and UI\n'
+  firewall-cmd --permanent --zone='public' --add-service='nomad-http'
 
-printf '>>>  Setting up firewall rules for Nomad inter-node communication\n'
-firewall-cmd --permanent --zone='internal' --add-service='nomad-serf'
-firewall-cmd --permanent --zone='trusted' --add-service='nomad-serf'
-firewall-cmd --permanent --zone='trusted' --add-service='nomad-grpc'
+  printf '>>>  Setting up firewall rules for Nomad inter-node communication\n'
+  firewall-cmd --permanent --zone='internal' --add-service='nomad-serf'
+  firewall-cmd --permanent --zone='trusted' --add-service='nomad-serf'
+  firewall-cmd --permanent --zone='trusted' --add-service='nomad-grpc'
+fi
 
 printf '>>>  Installing CNI plugins (v%s)\n' "${CNI_PLUGINS_VERSION}"
 mkdir -p /opt/cni/bin
