@@ -62,6 +62,12 @@ control 'hashistack-1.4b' do
       expect(addresses).to include '192.168.128.0/17'
     end
   end
+
+  describe firewalld.where { zone == 'trusted' } do
+    it 'should have ipset:consul in its sources' do
+      expect(subject.sources.flatten).to include 'ipset:consul'
+    end
+  end
 end
 
 control 'hashistack-1.4c' do
