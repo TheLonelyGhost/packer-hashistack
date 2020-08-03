@@ -3,14 +3,13 @@ Description=consul-template
 Documentation=https://github.com/hashicorp/consul-template
 Requires=network-online.target
 After=network-online.target consul.service
-ConditionFileNotEmpty=/etc/consul-template.d/base.hcl
+ConditionFileNotEmpty=/etc/consul-template/conf.d/base.hcl
 
 [Service]
 EnvironmentFile=-/etc/sysconfig/consul-template
-ExecStart=/usr/local/bin/consul-template -config=/etc/consul-template.d
+ExecStart=/usr/local/bin/consul-template -config=/etc/consul-template/conf.d
 KillSignal=SIGINT
 Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
-

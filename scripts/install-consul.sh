@@ -58,10 +58,11 @@ chmod 700 /etc/consul.d
 chown -R consul:consul /etc/consul.d
 
 printf '>>>  Creating Consul Template configuration directory\n'
-mkdir -p /etc/consul-template.d/templates
-chmod 600 -R /etc/consul-template.d
-chmod 700 /etc/consul-template.d
-chown -R consul:consul /etc/consul-template.d
+mkdir -p /etc/consul-template/conf.d
+mkdir -p /etc/consul-template/templates.d
+chmod 600 -R /etc/consul-template
+chmod 700 /etc/consul-template /etc/consul-template/conf.d /etc/consul-template/templates.d
+chown -R consul:consul /etc/consul-template
 
 # Consul has a VXLAN solution built-in, but HashiCorp recommends using Envoy instead
 printf '>>>  Installing Envoy as a VXLAN provider\n'

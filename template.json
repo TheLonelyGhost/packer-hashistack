@@ -57,6 +57,11 @@
     },
     {
       "type": "file",
+      "source": "{{ template_dir }}/consul-template/",
+      "destination": "/etc/consul-template"
+    },
+    {
+      "type": "file",
       "source": "{{ template_dir }}/conf/consul-dnsmasq.ini",
       "destination": "/etc/dnsmasq.d/10-consul"
     },
