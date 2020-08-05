@@ -121,9 +121,13 @@ if command -v firewall-cmd 1>/dev/null 2>&1; then
 
   firewall-cmd --permanent --zone='trusted' --add-service='consul-dns'
   firewall-cmd --permanent --zone='trusted' --add-service='consul-expose'
-  firewall-cmd --permanent --zone='trusted' --add-service='consul-grpc'
-  firewall-cmd --permanent --zone='trusted' --add-service='consul-http'
-  firewall-cmd --permanent --zone='trusted' --add-service='consul-https'
+
+  # Exposing these 3 for Consul agents (not servers)
+  # risks passing on the embedded token that would
+  # normally be limited to localhost connections only.
+  # firewall-cmd --permanent --zone='trusted' --add-service='consul-grpc'
+  # firewall-cmd --permanent --zone='trusted' --add-service='consul-http'
+  # firewall-cmd --permanent --zone='trusted' --add-service='consul-https'
   firewall-cmd --permanent --zone='trusted' --add-service='consul-serf-lan'
   firewall-cmd --permanent --zone='trusted' --add-service='consul-serf-wan'
   firewall-cmd --permanent --zone='trusted' --add-service='consul-server'
