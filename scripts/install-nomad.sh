@@ -119,6 +119,12 @@ if command -v firewall-cmd 1>/dev/null 2>&1; then
   firewall-cmd --permanent --zone='trusted' --add-service='nomad-grpc'
 fi
 
+printf '>>>  Allowing nomad to talk to docker\n'
+
+if grep -qFe docker /etc/group 1>/dev/null 2>&1; then
+  usermod -aG docker nomad
+fi
+
 printf '>>>  Installing CNI plugins (v%s)\n' "${CNI_PLUGINS_VERSION}"
 mkdir -p /opt/cni/bin
 
