@@ -1,10 +1,11 @@
 {
   "variables": {
-    "consul_version": "1.8.0",
+    "consul_version": "1.8.3",
     "consul_template_version": "0.25.1",
-    "nomad_version": "0.12.1",
+    "envconsul_version": "0.10.0",
+    "nomad_version": "0.12.3",
     "cni_plugins_version": "0.8.6",
-    "vault_version": "1.5.0",
+    "vault_version": "1.5.2",
     "linode_api_key": "{{ env `LINODE_API_KEY` }}",
     "ssh_port": "{{ env `SSH_PORT` }}",
     "entry_username": "{{ env `SSH_USER` }}",
@@ -52,7 +53,8 @@
       "script": "{{ template_dir }}/scripts/install-consul.sh",
       "environment_vars": [
         "CONSUL_VERSION={{ user `consul_version` }}",
-        "CONSUL_TEMPLATE_VERSION={{ user `consul_template_version` }}"
+        "CONSUL_TEMPLATE_VERSION={{ user `consul_template_version` }}",
+        "ENVCONSUL_VERSION={{ user `envconsul_version` }}"
       ]
     },
     {

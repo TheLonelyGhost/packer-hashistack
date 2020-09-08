@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-: ${CONSUL_VERSION:=1.8.0}
+: ${CONSUL_VERSION:=1.8.3}
 : ${CONSUL_TEMPLATE_VERSION:=0.25.1}
+: ${ENVCONSUL_VERSION:=0.10.0}
 
 printf '>>>  Downloading Consul v%s...\n' "$CONSUL_VERSION"
 curl -SsLo ./consul_SHA256SUMS https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_SHA256SUMS
@@ -46,6 +47,26 @@ mkdir -p /usr/local/bin
 chmod +x ./consul-template
 chown root:root ./consul-template
 mv ./consul-template /usr/local/bin/consul-template
+
+printf '>>>  Downloading envconsul v%s...\n' "$ENVCONSUL_VERSION"
+curl -SsLo ./envconsul_SHA256SUMS https://releases.hashicorp.com/envconsul/${ENVCONSUL_VERSION}/envconsul_${ENVCONSUL_VERSION}_SHA256SUMS
+curl -SsLo ./envconsul.zip https://releases.hashicorp.com/envconsul/${ENVCONSUL_VERSION}/envconsul_${ENVCONSUL_VERSION}_linux_amd64.zip
+
+if [ -e ./envconsul_SHA256SUMS ]; then
+  printf '>>>  Verifying envconsul download...\n'
+  awk '/_linux_amd64.zip/ { print $1 " envconsul.zip" }' ./envconsul_SHA256SUMS | sha256sum --check -
+  rm ./envconsul_SHA256SUMS
+fi
+
+printf '>>>  Extracting envconsul from archive\n'
+unzip ./envconsul.zip
+rm ./envconsul.zip
+
+printf '>>>  Installing envconsul binary to /usr/local/bin\n'
+mkdir -p /usr/local/bin
+chmod +x ./envconsul
+chown root:root ./envconsul
+mv ./envconsul /usr/local/bin/envconsul
 
 printf '>>>  Creating Consul system user\n'
 useradd --system --home /etc/consul.d --shell /bin/false consul
