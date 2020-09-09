@@ -138,4 +138,4 @@ fi
 tar xzf ./cni-plugins.tgz -C /opt/cni/bin/
 
 systemctl daemon-reload
-systemctl enable nomad
+# systemctl enable nomad

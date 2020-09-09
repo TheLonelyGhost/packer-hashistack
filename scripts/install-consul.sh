@@ -105,8 +105,6 @@ if [ -e /etc/systemd/resolved.conf ]; then
   systemctl restart systemd-resolved.service
 fi
 
-systemctl enable dnsmasq
-
 if command -v firewall-cmd 1>/dev/null 2>&1; then
   firewall-cmd --permanent --zone='trusted' --add-service='dns'
 
@@ -156,5 +154,6 @@ if command -v firewall-cmd 1>/dev/null 2>&1; then
 fi
 
 systemctl daemon-reload
-systemctl enable consul
-systemctl enable consul-template
+systemctl enable dnsmasq
+# systemctl enable consul
+# systemctl enable consul-template
