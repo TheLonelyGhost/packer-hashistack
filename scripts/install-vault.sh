@@ -36,7 +36,7 @@ chown -R vault:vault /etc/vault.d
 chmod 700 /etc/vault.d
 
 if command -v firewall-cmd 1>/dev/null 2>&1; then
-  for service in 'vault'; do
+  for service in 'vault-http' 'vault-cluster'; do
     if [ -e "/tmp/firewalld/${service}.xml" ]; then
       printf '>>>  Installing firewall definition for "%s" service\n' "$service"
       firewall-cmd --permanent --new-service-from-file="/tmp/firewalld/${service}.xml" --name="${service}"

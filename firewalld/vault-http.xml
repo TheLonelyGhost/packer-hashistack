@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<service>
+  <short>Vault</short>
+  <description>Vault API and UI</description>
+  <port protocol="tcp" port="8200" />
+</service>

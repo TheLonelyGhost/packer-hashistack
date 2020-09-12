@@ -1,0 +1,67 @@
+{
+  "variables": {
+    "consul_template_version": "0.25.1",
+    "envconsul_version": "0.10.0",
+    "cni_plugins_version": "0.8.6",
+    "linode_api_key": "{{ env `LINODE_API_KEY` }}",
+    "ssh_port": "{{ env `SSH_PORT` }}",
+    "entry_username": "{{ env `SSH_USER` }}",
+    "entry_user_pubkey": "{{ env `PUBKEY` }}"
+  },
+  "sensitive-variables": ["entry_username", "ssh_port", "linode_api_key"],
+  "builders": [
+    {
+      "type": "linode",
+      "linode_token": "{{ user `linode_api_key` }}",
+      "image": "linode/centos8",
+      "region": "us-east",
+      "instance_type": "g6-nanode-1",
+      "instance_label": "temp-packer-linode-{{ timestamp }}",
+      "instance_tags": ["packer", "delete-me-if-older-than-4-hours"],
+
+      "image_label": "hashistack-simple",
+      "image_description": "Nomad, Consul, and Vault with helpers: Envoy, Docker, envconsul (v{{ user `envconsul_version` }}), and consul-template (v{{ user `consul_template_version` }})",
+
+      "ssh_username": "root"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "{{ template_dir }}/firewalld",
+      "destination": "/tmp"
+    },
+    {
+      "type": "file",
+      "source": "systemd/",
+      "destination": "/etc/systemd/system"
+    },
+    {
+      "type": "shell",
+      "script": "{{ template_dir }}/scripts/base.sh",
+      "environment_vars": [
+        "ENTRY_USER={{ user `entry_username` }}",
+        "ENTRY_USER_PUBKEY={{ user `entry_user_pubkey` }}",
+        "SSH_PORT={{ user `ssh_port` }}"
+      ]
+    },
+    {
+      "type": "shell",
+      "script": "{{ template_dir }}/scripts/install-hashistack.sh",
+      "environment_vars": [
+        "ENVCONSUL_VERSION={{ user `envconsul_version` }}",
+        "CONSUL_TEMPLATE_VERSION={{ user `consul_template_version` }}",
+        "CNI_PLUGINS_VERSION={{ user `cni_plugins_version` }}"
+      ]
+    },
+    {
+      "type": "file",
+      "source": "{{ template_dir }}/post-hoc",
+      "destination": "/opt/first-run"
+    },
+    {
+      "type": "shell",
+      "script": "{{ template_dir }}/scripts/cleanup.sh"
+    }
+  ]
+}
