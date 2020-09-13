@@ -33,7 +33,7 @@
     },
     {
       "type": "file",
-      "source": "systemd/",
+      "source": "{{ template_dir }}/systemd",
       "destination": "/etc/systemd/system"
     },
     {
@@ -53,6 +53,11 @@
         "CONSUL_TEMPLATE_VERSION={{ user `consul_template_version` }}",
         "CNI_PLUGINS_VERSION={{ user `cni_plugins_version` }}"
       ]
+    },
+    {
+      "type": "file",
+      "source": "{{ template_dir }}/consul-template",
+      "destination": "/etc/consul-template"
     },
     {
       "type": "file",

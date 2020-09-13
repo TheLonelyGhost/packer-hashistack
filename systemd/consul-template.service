@@ -1,9 +1,9 @@
 [Unit]
 Description=consul-template
 Documentation=https://github.com/hashicorp/consul-template
-Requires=network-online.target
+Requires=network-online.target consul.service
 After=network-online.target consul.service
-ConditionFileNotEmpty=/etc/consul-template/conf.d/base.hcl
+ConditionFileNotEmpty=/etc/consul-template/conf.d/ipset-consul.hcl
 
 [Service]
 EnvironmentFile=-/etc/sysconfig/consul-template

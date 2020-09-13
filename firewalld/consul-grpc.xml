@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <service>
   <short>Consul gRPC API</short>
-  <description></description>
+  <description>Envoy VXLAN communication lane</description>
   <port protocol="tcp" port="8502" />
 </service>

@@ -87,7 +87,6 @@ printf '>>>  Creating ipset to more easily translate Consul cluster membership t
 firewall-cmd --permanent --new-ipset='consul' --type='hash:net'
 firewall-cmd --permanent --zone='trusted' --add-source='ipset:consul'
 
-
 printf '>>>  Registering Nomad firewall services for later activation\n'
 for service in 'nomad-http' 'nomad-serf' 'nomad-grpc'; do
   if [ -e "/tmp/firewalld/${service}.xml" ]; then

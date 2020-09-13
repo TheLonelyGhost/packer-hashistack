@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <service>
   <short>Consul Server RPC</short>
-  <description></description>
+  <description>Communication between Consul servers</description>
   <port protocol="tcp" port="8300" />
 </service>

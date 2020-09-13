@@ -1,5 +1,5 @@
 template {
-  source = "/etc/consul-template.d/templates/ipset-consul.xml.ctmpl"
+  source = "/etc/consul-template/templates/ipset-consul.xml.ctmpl"
   destination = "/usr/etc/firewalld/ipsets/consul.xml"
   # create_dest_dirs = true
   perms = 0644
