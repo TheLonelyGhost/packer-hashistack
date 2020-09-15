@@ -44,6 +44,3 @@ if [ -n "${ENTRY_USER:-}" -a -n "${ENTRY_USER_PUBKEY:-}" ]; then
   chmod 600 /home/"${ENTRY_USER}"/.ssh/authorized_keys
   chown -R "${ENTRY_USER}:${ENTRY_USER}" /home/"${ENTRY_USER}"
 fi
-
-# LINODE: Add private IPv4 range to internal network zone
-firewall-cmd --permanent --zone='internal' --add-source='192.168.128.0/17'

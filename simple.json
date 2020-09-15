@@ -4,6 +4,7 @@
     "envconsul_version": "0.10.0",
     "cni_plugins_version": "0.8.6",
     "linode_api_key": "{{ env `LINODE_API_KEY` }}",
+    "do_api_key": "{{ env `DIGITAL_OCEAN_API_KEY` }}",
     "ssh_port": "{{ env `SSH_PORT` }}",
     "entry_username": "{{ env `SSH_USER` }}",
     "entry_user_pubkey": "{{ env `PUBKEY` }}"
@@ -12,15 +13,31 @@
   "builders": [
     {
       "type": "linode",
+      "name": "linode",
       "linode_token": "{{ user `linode_api_key` }}",
       "image": "linode/centos8",
       "region": "us-east",
       "instance_type": "g6-nanode-1",
-      "instance_label": "temp-packer-linode-{{ timestamp }}",
+      "instance_label": "temp-packer-{{ timestamp }}",
       "instance_tags": ["packer", "delete-me-if-older-than-4-hours"],
 
       "image_label": "hashistack-simple",
       "image_description": "Nomad, Consul, and Vault with helpers: Envoy, Docker, envconsul (v{{ user `envconsul_version` }}), and consul-template (v{{ user `consul_template_version` }})",
+
+      "ssh_username": "root"
+    },
+    {
+      "type": "digitalocean",
+      "name": "do",
+      "api_token": "{{ user `do_api_key` }}",
+      "image": "centos-8-x64",
+      "region": "nyc1",
+      "size": "s-1vcpu-1gb",
+      "droplet_name": "temp-packer-{{ timestamp }}",
+      "tags": ["packer", "delete-me-if-older-than-4-hours"],
+
+      "snapshot_name": "hashistack-simple-{{ timestamp }}",
+      "snapshot_regions": ["nyc1", "nyc2", "nyc3"],
 
       "ssh_username": "root"
     }
@@ -66,7 +83,21 @@
     },
     {
       "type": "shell",
-      "script": "{{ template_dir }}/scripts/cleanup.sh"
+      "scripts": ["{{ template_dir }}/scripts/cleanup.sh"],
+      "override": {
+        "linode": {
+          "scripts": [
+            "{{ template_dir }}/scripts/linode.sh",
+            "{{ template_dir }}/scripts/cleanup.sh"
+          ]
+        },
+        "do": {
+          "scripts": [
+            "{{ template_dir }}/scripts/digitalocean.sh",
+            "{{ template_dir }}/scripts/cleanup.sh"
+          ]
+        }
+      }
     }
   ]
 }
