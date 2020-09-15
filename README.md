@@ -83,9 +83,11 @@ client {
 EOH
 
 cat >/etc/nomad.d/volumes.hcl <<EOH
-host_volume "postgres" {
-  path      = "/opt/postgres/data"
-  read_only = false
+client {
+  host_volume "postgres" {
+    path      = "/opt/postgres/data"
+    read_only = false
+  }
 }
 EOH
 
