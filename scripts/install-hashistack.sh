@@ -35,7 +35,7 @@ if grep -qFe docker /etc/group 1>/dev/null 2>&1; then
 fi
 
 printf '>>>  Installing CNI plugins (v%s)\n' "${CNI_PLUGINS_VERSION}"
-mkdir -p /opt/cni/bin
+mkdir -p /opt/cni/bin /opt/cni/config
 
 curl -SsLo ./cni-plugins.tgz "https://github.com/containernetworking/plugins/releases/download/v${CNI_PLUGINS_VERSION}/cni-plugins-linux-amd64-v${CNI_PLUGINS_VERSION}.tgz"
 curl -SsLo ./cni-plugins_SHA256SUMS "https://github.com/containernetworking/plugins/releases/download/v${CNI_PLUGINS_VERSION}/cni-plugins-linux-amd64-v${CNI_PLUGINS_VERSION}.tgz.sha256"

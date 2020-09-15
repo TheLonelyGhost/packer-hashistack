@@ -1,12 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# : ${LINODE_API_TOKEN:=}
-: ${LINODE_TAG_NOMAD:=nomad-server}
-: ${LINODE_REGION:=us-east}
-
-# TODO: Setup config files for nomad
-
 cat >/etc/nomad.d/nomad.hcl <<EOH
 # Full configuration options can be found at https://www.nomadproject.io/docs/configuration
 
@@ -17,13 +11,25 @@ EOH
 cat >/etc/nomad.d/server.hcl <<EOH
 server {
   enabled = true
-  server_join {
-    retry_join = ["provider=linode tag_name=${LINODE_TAG_NOMAD} region=${LINODE_REGION} address_type=private_v4 api_token=${LINODE_API_TOKEN}"]
-  }
+  encrypt = "${NOMAD_SERF_ENCRYPTION_KEY}"
 }
 EOH
+
+# NOTE: Firewalld implicitly allows all communication over local loopback
+#       (127.0.0.1, ::1) to all ports.
+
+# Inter-node communication (allowed to be `public`, but Consul keeps `trusted` zone up-to-date with our network)
+firewall-cmd --permanent --zone='trusted' --add-service='nomad-serf'
+
+# CLI -> Client and UI -> Server communication
+firewall-cmd --permanent --zone='trusted' --add-service='nomad-http'
+
+# Client -> Client/Server communication
+firewall-cmd --permanent --zone='trusted' --add-service='nomad-grpc'
+
+firewall-cmd --reload
 
 chown -R nomad:nomad /etc/nomad.d
 
 systemctl enable nomad
-systemctl restart nomad
+systemctl start nomad

@@ -111,7 +111,7 @@ if command -v firewall-cmd 1>/dev/null 2>&1; then
   firewall-cmd --permanent --zone='public' --add-service='https'
 
   printf '>>>  Setting up firewall rules for Nomad HTTP API and UI\n'
-  firewall-cmd --permanent --zone='public' --add-service='nomad-http'
+  firewall-cmd --permanent --zone='trusted' --add-service='nomad-http'
 
   printf '>>>  Setting up firewall rules for Nomad inter-node communication\n'
   firewall-cmd --permanent --zone='internal' --add-service='nomad-serf'
@@ -138,4 +138,3 @@ fi
 tar xzf ./cni-plugins.tgz -C /opt/cni/bin/
 
 systemctl daemon-reload
-# systemctl enable nomad

@@ -59,6 +59,7 @@ For only a minimal Nomad setup, perhaps you want it to act in both server and cl
 - Linode
 - Nomad Server
 - Nomad Client
+- Host volume for stateful data
 
 ```
 #!/usr/bin/env bash
@@ -70,6 +71,26 @@ export REGION='us-east'
 /opt/post-hoc/cluster-join-linode.sh
 /opt/post-hoc/setup-nomad-client.sh
 /opt/post-hoc/setup-nomad-server.sh
+
+mkdir -p /opt/postgres/data
+
+cat >>/etc/nomad.d/meta.hcl <<EOH
+client {
+  meta {
+    "stateful" = "db"
+  }
+}
+EOH
+
+cat >/etc/nomad.d/volumes.hcl <<EOH
+host_volume "postgres" {
+  path      = "/opt/postgres/data"
+  read_only = false
+}
+EOH
+
+chown -R nomad:nomad /opt/postgres /etc/nomad.d
+systemctl reload nomad
 ```
 
 ## Building
