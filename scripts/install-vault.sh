@@ -50,4 +50,4 @@ if command -v firewall-cmd 1>/dev/null 2>&1; then
   #firewall-cmd --permanent --zone='trusted' --add-service='vault'
 fi
 
-systemctl enable vault
+# systemctl enable vault
