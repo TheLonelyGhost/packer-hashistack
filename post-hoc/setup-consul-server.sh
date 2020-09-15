@@ -4,14 +4,19 @@ set -euo pipefail
 mkdir -p /opt/consul
 
 cat >/etc/consul.d/consul.hcl <<EOH
-data_dir = "/opt/consul"
+data_dir    = "/opt/consul"
 client_addr = "0.0.0.0"
+EOH
+
+cat >/etc/nomad.d/consul.hcl <<EOH
+consul {
+  address = "127.0.0.1:8500"
+}
 EOH
 
 cat >/etc/consul.d/server.hcl <<EOH
 server = true
-
-ui = true
+ui     = true
 EOH
 
 # NOTE: Firewalld implicitly allows all communication over local loopback

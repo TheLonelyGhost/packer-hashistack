@@ -4,8 +4,20 @@ set -euo pipefail
 mkdir -p /opt/consul
 
 cat >/etc/consul.d/consul.hcl <<EOH
-data_dir = "/opt/consul"
+data_dir    = "/opt/consul"
 client_addr = "0.0.0.0"
+EOH
+
+cat >/etc/nomad.d/consul.hcl <<EOH
+consul {
+  address = "127.0.0.1:8500"
+}
+EOH
+
+cat >/etc/vault.d/consul.hcl <<EOH
+service_registration "consul" {
+  address = "127.0.0.1:8500"
+}
 EOH
 
 cat >/etc/consul.d/agent.hcl <<EOH
