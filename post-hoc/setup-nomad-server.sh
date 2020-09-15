@@ -8,6 +8,18 @@ data_dir = "/opt/nomad/data"
 bind_addr = "0.0.0.0"
 EOH
 
+cat >/etc/nomad.d/autopilot.hcl <<EOH
+autopilot {
+  cleanup_dead_servers      = true
+  last_contact_threshold    = "200ms"
+  max_trailing_logs         = 250
+  server_stabilization_time = "10s"
+  enable_redundancy_zones   = false
+  disable_upgrade_migration = false
+  enable_custom_upgrades    = false
+}
+EOH
+
 cat >/etc/nomad.d/server.hcl <<EOH
 server {
   enabled = true
