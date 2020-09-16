@@ -3,9 +3,9 @@ set -euo pipefail
 
 NODE_ID=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 
-: ${CONSUL_TAG:-consul-server}
-: ${NOMAD_TAG:-nomad-server}
-: ${REGION:-nyc1}
+: ${CONSUL_TAG:=consul-server}
+: ${NOMAD_TAG:=nomad-server}
+: ${REGION:=nyc1}
 
 cat >/etc/consul.d/join.hcl <<EOH
 retry_join = ["provider=digitalocean tag_name=${TAG} region=${REGION} api_token=${API_TOKEN}"]

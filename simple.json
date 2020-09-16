@@ -21,7 +21,7 @@
       "instance_label": "temp-packer-{{ timestamp }}",
       "instance_tags": ["packer", "delete-me-if-older-than-4-hours"],
 
-      "image_label": "hashistack-simple",
+      "image_label": "hashistack-simple-{{ timestamp }}",
       "image_description": "Nomad, Consul, and Vault with helpers: Envoy, Docker, envconsul (v{{ user `envconsul_version` }}), and consul-template (v{{ user `consul_template_version` }})",
 
       "ssh_username": "root"
