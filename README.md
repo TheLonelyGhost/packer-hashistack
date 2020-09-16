@@ -28,10 +28,10 @@ set -euo pipefail
 export API_TOKEN='<your-readonly-api-token>'
 export REGION='us-east'
 
-/opt/post-hoc/cluster-join-linode.sh
-/opt/post-hoc/setup-consul-agent.sh
-/opt/post-hoc/setup-vault-agent.sh
-/opt/post-hoc/setup-nomad-client.sh
+/opt/first-run/cluster-join-linode.sh
+/opt/first-run/setup-consul-agent.sh
+/opt/first-run/setup-vault-agent.sh
+/opt/first-run/setup-nomad-client.sh
 ```
 
 And here's one for the following:
@@ -48,10 +48,10 @@ set -euo pipefail
 export API_TOKEN='<your-readonly-api-token>'
 export REGION='nyc3'
 
-/opt/post-hoc/cluster-join-digitalocean.sh
-/opt/post-hoc/setup-consul-server.sh
-/opt/post-hoc/setup-vault-server.sh
-/opt/post-hoc/setup-nomad-server.sh
+/opt/first-run/cluster-join-digitalocean.sh
+/opt/first-run/setup-consul-server.sh
+/opt/first-run/setup-vault-server.sh
+/opt/first-run/setup-nomad-server.sh
 ```
 
 For only a minimal Nomad setup, perhaps you want it to act in both server and client capacity:
@@ -68,9 +68,9 @@ set -euo pipefail
 export API_TOKEN='<your-readonly-api-token>'
 export REGION='us-east'
 
-/opt/post-hoc/cluster-join-linode.sh
-/opt/post-hoc/setup-nomad-client.sh
-/opt/post-hoc/setup-nomad-server.sh
+/opt/first-run/cluster-join-linode.sh
+/opt/first-run/setup-nomad-client.sh
+/opt/first-run/setup-nomad-server.sh
 
 mkdir -p /opt/postgres/data
 

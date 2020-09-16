@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+chmod +x /opt/first-run/*.sh
+
 dnf clean all
 systemctl daemon-reload
 systemctl restart sshd
