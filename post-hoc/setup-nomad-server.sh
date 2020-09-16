@@ -25,6 +25,11 @@ EOH
 cat >/etc/nomad.d/server.hcl <<EOH
 server {
   enabled = true
+}
+EOH
+
+cat >/etc/nomad.d/encrypt.hcl <<EOH
+server {
   encrypt = "${NOMAD_SERF_ENCRYPTION_KEY}"
 }
 EOH
