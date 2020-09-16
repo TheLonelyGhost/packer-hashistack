@@ -51,7 +51,7 @@
     {
       "type": "file",
       "source": "{{ template_dir }}/systemd",
-      "destination": "/etc/systemd/system"
+      "destination": "/tmp/systemd"
     },
     {
       "type": "shell",

@@ -9,7 +9,8 @@ cat >/etc/vault.d/agent.hcl <<EOH
 # TODO
 EOH
 
-mv /etc/systemd/system/vault.service.d/agent.conf{.example,}
+mkdir -p /etc/systemd/system/vault.service.d
+cp /tmp/systemd/vault.service.d/agent.conf.example /etc/systemd/system/vault.service.d/agent.conf
 systemctl daemon-reload
 
 systemctl enable vault

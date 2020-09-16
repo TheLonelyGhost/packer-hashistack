@@ -75,6 +75,9 @@ chmod +x ./consul-template
 chown root:root ./consul-template
 mv ./consul-template /usr/local/bin/consul-template
 
+cp /tmp/systemd/consul-template.service /etc/systemd/system/consul-template.service
+systemctl daemon-reload
+
 printf '>>>  Registering Consul firewall services for later activation\n'
 for service in 'consul-dns' 'consul-grpc' 'consul-http' 'consul-https' 'consul-serf-lan' 'consul-serf-wan' 'consul-server' 'consul-sidecar' 'consul-expose'; do
   if [ -e "/tmp/firewalld/${service}.xml" ]; then
