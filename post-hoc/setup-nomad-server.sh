@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+mkdir -p /opt/nomad/data
+chown -R nomad:nomad /opt/nomad/data
+
 cat >/etc/nomad.d/nomad.hcl <<EOH
 # Full configuration options can be found at https://www.nomadproject.io/docs/configuration
 
@@ -15,7 +18,6 @@ autopilot {
   max_trailing_logs         = 250
   server_stabilization_time = "10s"
   enable_redundancy_zones   = false
-  disable_upgrade_migration = false
   enable_custom_upgrades    = false
 }
 EOH

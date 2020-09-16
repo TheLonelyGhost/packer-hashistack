@@ -28,6 +28,20 @@ EOH
 cat >/etc/consul.d/consul.hcl <<EOH
 data_dir    = "/opt/consul"
 client_addr = "0.0.0.0"
+
+datacenter = "dc1"
+EOH
+
+cat >/etc/consul.d/connect.hcl <<EOH
+connect {
+  enabled     = true
+}
+EOH
+
+cat >/etc/consul.d/encrypt.hcl <<EOH
+encrypt = "${CONSUL_SERF_ENCRYPTION_KEY}"
+encrypt_verify_incoming = true
+encrypt_verify_outgoing = true
 EOH
 
 # NOTE: Firewalld implicitly allows all communication over local loopback

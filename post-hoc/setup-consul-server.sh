@@ -3,20 +3,49 @@ set -euo pipefail
 
 mkdir -p /opt/consul
 
-cat >/etc/consul.d/consul.hcl <<EOH
-data_dir    = "/opt/consul"
-client_addr = "0.0.0.0"
-EOH
-
 cat >/etc/nomad.d/consul.hcl <<EOH
 consul {
   address = "127.0.0.1:8500"
 }
 EOH
 
+# Override previous, cloud-specific join directives in favor
+# of Consul service discovery mechanisms
+cat >/etc/nomad.d/join.hcl <<EOH
+consul {
+  server_auto_join = true
+  client_auto_join = true
+}
+EOH
+
+cat >/etc/vault.d/consul.hcl <<EOH
+service_registration "consul" {
+  address = "127.0.0.1:8500"
+}
+EOH
+
+cat >/etc/consul.d/consul.hcl <<EOH
+data_dir    = "/opt/consul"
+client_addr = "0.0.0.0"
+
+datacenter = "dc1"
+EOH
+
 cat >/etc/consul.d/server.hcl <<EOH
 server = true
 ui     = true
+EOH
+
+cat >/etc/consul.d/connect.hcl <<EOH
+connect {
+  enabled     = true
+}
+EOH
+
+cat >/etc/consul.d/encrypt.hcl <<EOH
+encrypt = "${CONSUL_SERF_ENCRYPTION_KEY}"
+encrypt_verify_incoming = true
+encrypt_verify_outgoing = true
 EOH
 
 # NOTE: Firewalld implicitly allows all communication over local loopback
