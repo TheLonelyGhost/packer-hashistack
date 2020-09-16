@@ -3,6 +3,7 @@ set -euo pipefail
 
 NODE_ID=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1 || true)
 
+: ${NODE_NAME:=$NODE_ID}
 : ${CONSUL_TAG:=consul-server}
 : ${NOMAD_TAG:=nomad-server}
 : ${REGION:=us-east}
@@ -12,13 +13,13 @@ retry_join = ["provider=linode tag_name=${CONSUL_TAG} region=${REGION} api_token
 EOH
 
 cat >/etc/consul.d/node.hcl <<EOH
-# This defaults to the system hostname
-#node_name = "${NODE_ID}"
+# This defaults to the system hostname if left empty
+node_name = "${NODE_NAME}"
 EOH
 
 cat >/etc/nomad.d/node.hcl <<EOH
-# This defaults to the system hostname
-#name = "${NODE_ID}"
+# This defaults to the system hostname if left empty
+name = "${NODE_NAME}"
 EOH
 
 cat >/etc/nomad.d/join.hcl <<EOH
