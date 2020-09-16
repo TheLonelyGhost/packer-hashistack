@@ -10,12 +10,12 @@ mv ./docker-ce.repo /etc/yum.repos.d/docker-ce.repo
 curl -SLo ./tetrate-getenvoy.repo https://getenvoy.io/linux/centos/tetrate-getenvoy.repo
 mv ./tetrate-getenvoy.repo /etc/yum.repos.d/tetrate-getenvoy.repo
 
-dnf makecache
+dnf -y makecache
 
 printf '>>>  Docker install workaround for CentOS 8.x\n'
-dnf module enable container-tools && \
-  dnf install container-selinux && \
-  dnf module disable container-tools
+dnf module enable -y container-tools && \
+  dnf install -y container-selinux && \
+  dnf module disable -y container-tools
 
 dnf install -y nomad consul vault getenvoy-envoy docker-ce
 
