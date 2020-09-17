@@ -7,8 +7,9 @@ chown -R nomad:nomad /opt/nomad/data
 cat >/etc/nomad.d/nomad.hcl <<EOH
 # Full configuration options can be found at https://www.nomadproject.io/docs/configuration
 
-data_dir = "/opt/nomad/data"
-bind_addr = "0.0.0.0"
+data_dir             = "/opt/nomad/data"
+log_rotate_max_files = 30
+bind_addr            = "0.0.0.0"
 EOH
 
 cat >/etc/nomad.d/autopilot.hcl <<EOH

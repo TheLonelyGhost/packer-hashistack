@@ -7,13 +7,19 @@ chown -R nomad:nomad /opt/nomad/data
 cat >/etc/nomad.d/nomad.hcl <<EOH
 # Full configuration options can be found at https://www.nomadproject.io/docs/configuration
 
-data_dir = "/opt/nomad/data"
-bind_addr = "0.0.0.0"
+data_dir             = "/opt/nomad/data"
+log_rotate_max_files = 30
+bind_addr            = "0.0.0.0"
 EOH
 
 cat >/etc/nomad.d/client.hcl <<EOH
 client {
   enabled = true
+
+  options {
+    "user.blacklist"       = "root,${ENTRY_USER}"
+    "user.checked_drivers" = "exec,raw_exec"
+  }
 }
 EOH
 
