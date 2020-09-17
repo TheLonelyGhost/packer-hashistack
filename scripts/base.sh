@@ -8,9 +8,6 @@ dnf install -y fail2ban
 systemctl daemon-reload
 systemctl enable fail2ban
 
-printf '>>>  Allow SSH communications over WAN\n'
-firewall-cmd --permanent --zone='public' --add-service='ssh' || true
-
 printf '>>>  Setting timezone to UTC\n'
 timedatectl set-timezone UTC && sleep 2
 
@@ -27,6 +24,11 @@ if [ "${SSH_PORT:-22}" != '22' ]; then
 
   firewall-cmd --permanent --service='ssh' --add-port="${SSH_PORT}/tcp"
   firewall-cmd --reload
+fi
+
+if ! firewall-cmd --zone='public' --query-service='ssh'; then
+  printf '>>>  Allow SSH communications over WAN\n'
+  firewall-cmd --permanent --zone='public' --add-service='ssh' || true
 fi
 
 printf '>>>  Deduping SSH config settings (where lines are exactly the same)\n'

@@ -88,6 +88,7 @@ done
 
 printf '>>>  Creating ipset to more easily translate Consul cluster membership to firewall rules\n'
 firewall-cmd --permanent --new-ipset='consul' --type='hash:net'
+printf '>>>  Allow Consul nodes as part of our trusted network, thereby allowing traffic to all ports\n'
 firewall-cmd --permanent --zone='trusted' --add-source='ipset:consul'
 
 printf '>>>  Registering Nomad firewall services for later activation\n'

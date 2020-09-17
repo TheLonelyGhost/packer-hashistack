@@ -50,9 +50,15 @@ EOH
 
 # NOTE: Firewalld implicitly allows all communication over local loopback
 #       (127.0.0.1, ::1) to all ports.
+#
+# NOTE: Serf and GRPC traffic for Consul (whether LAN or WAN) should be in
+#       the `public` zone because we need to bootstrap a node to the cluster
+#       somehow. It will appear as a stranger until we join, but since we
+#       encrypt Serf and GRPC traffic, prior knowledge of the encryption key
+#       acts as an auth mechanism instead of just IP membership.
 
 # LAN-based, peer-to-peer gossip for Consul data
-firewall-cmd --permanent --zone='internal' --add-service='consul-serf-lan'
+firewall-cmd --permanent --zone='public' --add-service='consul-serf-lan'
 
 # WAN-based, peer-to-peer gossip for Consul data
 firewall-cmd --permanent --zone='public' --add-service='consul-serf-wan'
@@ -80,8 +86,6 @@ firewall-cmd --permanent --zone='trusted' --add-service='consul-https'
 # Consul DNS-based APIs (Consul Server only)
 firewall-cmd --permanent --zone='trusted' --add-service='consul-dns'
 ###### </CONSUL-SERVER-ONLY> ########
-
-firewall-cmd --permanent --add-rich-rule='rule source ipset=consul accept'
 
 firewall-cmd --reload
 
