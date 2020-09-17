@@ -17,6 +17,9 @@ perl -i -pe's/^(#+)?\s*PermitRootLogin (yes|no)(.*)/PermitRootLogin no\3/g' /etc
 printf '>>>  Disabling password login over SSH\n'
 perl -i -pe's/^(#+)?\s*PasswordAuthentication (yes|no)(.*)/PasswordAuthentication no\3/g' /etc/ssh/sshd_config
 
+printf '>>>  Log all firewall denials to `dmesg` and `journalctl -k` (`grep -i "REJECT"`)\n'
+firewall-cmd --set-log-denied=all
+
 if [ "${SSH_PORT:-22}" != '22' ]; then
   printf '>>>  Changing SSH port\n'
   perl -i -pe's/^(#+)?\s*Port 22\s*$/Port '"${SSH_PORT}"'\n/g' /etc/ssh/sshd_config
