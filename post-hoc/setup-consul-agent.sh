@@ -63,6 +63,8 @@ firewall-cmd --permanent --zone='public' --add-service='consul-grpc'
 # Consul connect proxies (not needed since expose ports to local loopback only)
 #firewall-cmd --permanent --zone='trusted' --add-service='consul-sidecar'
 
+firewall-cmd --permanent --add-rich-rule='rule source ipset=consul accept'
+
 firewall-cmd --reload
 
 

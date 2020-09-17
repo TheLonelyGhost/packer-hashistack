@@ -81,6 +81,8 @@ firewall-cmd --permanent --zone='trusted' --add-service='consul-https'
 firewall-cmd --permanent --zone='trusted' --add-service='consul-dns'
 ###### </CONSUL-SERVER-ONLY> ########
 
+firewall-cmd --permanent --add-rich-rule='rule source ipset=consul accept'
+
 firewall-cmd --reload
 
 
