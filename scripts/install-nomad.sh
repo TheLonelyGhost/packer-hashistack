@@ -35,8 +35,8 @@ else
   exit 1
 fi
 
-: ${NOMAD_VERSION:=0.12.1}
-: ${CNI_PLUGINS_VERSION:=0.8.6}
+: "${NOMAD_VERSION:=1.0.6}"
+: "${CNI_PLUGINS_VERSION:=0.9.1}"
 
 mkdir -p /tmp/nomad
 

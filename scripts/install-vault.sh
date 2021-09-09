@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-: ${VAULT_VERSION:=1.5.0}
+: "${VAULT_VERSION:=1.7.2}"
 
 printf '>>>  Downloading Vault v%s...\n' "$VAULT_VERSION"
 curl -SsLo ./vault_SHA256SUMS https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_SHA256SUMS
@@ -28,7 +28,7 @@ setcap cap_ipc_lock=+ep /usr/local/bin/vault
 complete -C /usr/local/bin/vault vault
 
 printf '>>>  Creating Vault system user\n'
-useradd --system --home /etc/vault.d --shell /bin/false vault
+useradd --system --home /etc/vault --shell /bin/false vault
 
 printf '>>>  Creating Vault data directory\n'
 mkdir -p /etc/vault.d

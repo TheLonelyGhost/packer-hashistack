@@ -17,7 +17,7 @@ client {
   enabled = true
 
   options {
-    "user.blacklist"       = "root,${ENTRY_USER}"
+    "user.deny_list"       = "root,${ENTRY_USER}"
     "user.checked_drivers" = "exec,raw_exec"
   }
 }

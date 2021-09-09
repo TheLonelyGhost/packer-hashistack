@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-: ${CONSUL_VERSION:=1.8.3}
-: ${CONSUL_TEMPLATE_VERSION:=0.25.1}
-: ${ENVCONSUL_VERSION:=0.10.0}
+: "${CONSUL_VERSION:=1.8.3}"
+: "${CONSUL_TEMPLATE_VERSION:=0.25.1}"
+: "${ENVCONSUL_VERSION:=0.10.0}"
 
 printf '>>>  Downloading Consul v%s...\n' "$CONSUL_VERSION"
 curl -SsLo ./consul_SHA256SUMS https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_SHA256SUMS
@@ -20,10 +20,7 @@ unzip ./consul.zip
 rm ./consul.zip
 
 printf '>>>  Installing Consul binary to /usr/local/bin\n'
-mkdir -p /usr/local/bin
-chmod +x ./consul
-chown root:root ./consul
-mv ./consul /usr/local/bin/consul
+install -D -t /usr/local/bin ./consul
 
 /usr/local/bin/consul -autocomplete-install
 complete -C /usr/local/bin/consul consul
@@ -43,10 +40,7 @@ unzip ./consul-template.zip
 rm ./consul-template.zip
 
 printf '>>>  Installing Consul Template binary to /usr/local/bin\n'
-mkdir -p /usr/local/bin
-chmod +x ./consul-template
-chown root:root ./consul-template
-mv ./consul-template /usr/local/bin/consul-template
+install -D -t /usr/local/bin ./consul-template
 
 printf '>>>  Downloading envconsul v%s...\n' "$ENVCONSUL_VERSION"
 curl -SsLo ./envconsul_SHA256SUMS https://releases.hashicorp.com/envconsul/${ENVCONSUL_VERSION}/envconsul_${ENVCONSUL_VERSION}_SHA256SUMS
@@ -63,10 +57,7 @@ unzip ./envconsul.zip
 rm ./envconsul.zip
 
 printf '>>>  Installing envconsul binary to /usr/local/bin\n'
-mkdir -p /usr/local/bin
-chmod +x ./envconsul
-chown root:root ./envconsul
-mv ./envconsul /usr/local/bin/envconsul
+install -D -t /usr/local/bin ./envconsul
 
 printf '>>>  Creating Consul system user\n'
 useradd --system --home /etc/consul.d --shell /bin/false consul
